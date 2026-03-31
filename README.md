@@ -1,5 +1,5 @@
 [README.md](https://github.com/user-attachments/files/26286450/README.md)
-# CIMS Project Starter
+# CS Project Overview
 
 This starter gives you:
 - a Flask backend API
@@ -33,7 +33,7 @@ cims_project_starter/
 └── README.md
 ```
 
-## 1. Install MySQL and create the database
+## Create the database
 
 Open MySQL and run:
 
@@ -41,7 +41,7 @@ Open MySQL and run:
 CREATE DATABASE cims_db;
 ```
 
-## 2. Configure the backend
+## Configure the backend
 
 Go into the backend folder:
 
@@ -97,7 +97,7 @@ JWT_SECRET_KEY=my-super-secret-key
 FLASK_DEBUG=True
 ```
 
-## 3. Run the backend
+## Run backend
 
 From the `backend` folder:
 
@@ -111,7 +111,7 @@ The API will start at:
 http://localhost:5000
 ```
 
-## 4. Initialize the database tables and seed starter data
+## Initialize database tables and seed starter data
 
 After the backend is running, call:
 
@@ -134,7 +134,7 @@ email: admin@cyberguard.local
 password: Admin123!
 ```
 
-## 5. Test the API
+## Test API
 
 ### Health check
 ```bash
@@ -168,7 +168,7 @@ curl http://localhost:5000/api/incidents \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
-## 6. Run the frontend starter
+## Run frontend starter
 
 Open a second terminal.
 
@@ -193,7 +193,7 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 If your backend is hosted elsewhere, update `frontend/app.js`.
 
-## 7. How the frontend connects to the API
+## How frontend connects to the API
 
 The flow is:
 
@@ -215,7 +215,7 @@ fetch('http://localhost:5000/api/incidents', {
 });
 ```
 
-## 8. Main API endpoints
+## Main API endpoints
 
 ### Auth
 - `POST /api/auth/register`
@@ -247,7 +247,7 @@ fetch('http://localhost:5000/api/incidents', {
 - `POST /api/setup`
 - `GET /api/health`
 
-## 9. Common connection issues
+## Connection issues
 
 ### MySQL connection refused
 - Make sure MySQL is running.
@@ -265,7 +265,7 @@ Authorization: Bearer YOUR_TOKEN
 - The backend already enables CORS for `/api/*`.
 - Make sure the frontend is calling the correct backend URL.
 
-## 10. Recommended next steps
+## Next steps
 
 - Add file uploads for incident evidence
 - Add pagination and search filters
