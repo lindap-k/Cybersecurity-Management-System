@@ -1,275 +1,256 @@
-[README.md](https://github.com/user-attachments/files/26286450/README.md)
-# CS Project Overview
+[README.md](https://github.com/user-attachments/files/26446550/README.md)
+# CyberGuard with Figma
 
-This starter gives you:
-- a Flask backend API
-- MySQL database connectivity with SQLAlchemy
-- JWT login
-- incident reporting endpoints
-- a tiny frontend starter that calls the API
+Full-stack layout with Figma-generated frontend connects cleanly to a Flask API.
 
 ## Project structure
 
 ```text
-cims_project_starter/
+Cyberguard_DBMS/
 ├── backend/
-│   ├── app/
-│   │   ├── routes/
-│   │   │   ├── admin.py
-│   │   │   ├── auth.py
-│   │   │   ├── dashboard.py
-│   │   │   ├── incidents.py
-│   │   │   ├── lookups.py
-│   │   │   └── setup.py
-│   │   ├── __init__.py
-│   │   ├── models.py
-│   │   └── utils.py
-│   ├── .env.example
+│   ├── run.py
 │   ├── requirements.txt
-│   └── run.py
+│   ├── .env.example
+│   └── src/
+│       └── app/
+│           ├── __init__.py
+│           ├── config.py
+│           ├── extensions.py
+│           ├── models.py
+│           ├── utils.py
+│           └── routes/
+│               ├── admin.py
+│               ├── auth.py
+│               ├── dashboard.py
+│               ├── incidents.py
+│               ├── lookups.py
+│               └── setup.py
 ├── frontend/
-│   ├── app.js
-│   └── index.html
+│   ├── index.html
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── vite.config.ts
+│   ├── .env.example
+│   └── src/
+│       ├── App.tsx
+│       ├── main.tsx
+│       ├── components/
+│       ├── context/
+│       ├── lib/
+│       ├── pages/
+│       ├── routes/
+│       ├── styles/
+│       └── types/
 └── README.md
 ```
 
-## Create the database
+## Why this restructure helps
 
-Open MySQL and run:
+The Figma export is good for layout, but it usually starts with mock arrays and simulated logins. 
+Bridge layer:
 
-```sql
-CREATE DATABASE cims_db;
+- `frontend/src/lib/api.ts` is the **frontend bridge**.
+- `backend/src/app/routes/*.py` are the **backend API endpoints**.
+- `backend/src/app/models.py` is the **database bridge** to MySQL.
+
+Creates path:
+
+```text
+Figma screen -> React component -> api.ts -> Flask route -> SQLAlchemy model -> MySQL
 ```
 
-## Configure the backend
+## 1) Run backend
 
-Go into the backend folder:
+### Create database
+
+In MySQL:
+
+```sql
+CREATE DATABASE cyber_db;
+```
+
+### Start the backend
 
 ```bash
 cd backend
-```
-
-Create a virtual environment.
-
-### macOS / Linux
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### Windows PowerShell
-```powershell
 python -m venv venv
-venv\Scripts\Activate.ps1
 ```
 
-Install packages:
-
+#### macOS / Linux
 ```bash
-pip install -r requirements.txt
-```
-
-Copy the environment file:
-
-### macOS / Linux
-```bash
+source venv/bin/activate
 cp .env.example .env
-```
-
-### Windows PowerShell
-```powershell
-copy .env.example .env
-```
-
-Edit `.env` and make sure this matches your MySQL username and password:
-
-```env
-DATABASE_URL=mysql+pymysql://root:password@localhost/cims_db
-JWT_SECRET_KEY=change-this-in-production
-FLASK_DEBUG=True
-```
-
-Example:
-
-```env
-DATABASE_URL=mysql+pymysql://root:MyRealPassword@localhost/cims_db
-JWT_SECRET_KEY=my-super-secret-key
-FLASK_DEBUG=True
-```
-
-## Run backend
-
-From the `backend` folder:
-
-```bash
+pip install -r requirements.txt
 python run.py
 ```
 
-The API will start at:
-
-```text
-http://localhost:5000
+#### Windows PowerShell
+```powershell
+venv\Scripts\Activate.ps1
+copy .env.example .env
+pip install -r requirements.txt
+python run.py
 ```
 
-## Initialize database tables and seed starter data
+Edit `.env` first if your MySQL password is not `password`.
 
-After the backend is running, call:
+API base URL:
 
-### curl
+```text
+http://localhost:5000/api
+```
+
+### Seed starter data
+
+Open a second terminal:
+
 ```bash
 curl -X POST http://localhost:5000/api/setup
 ```
 
-This creates:
-- tables
-- default roles
-- starter departments
-- starter attack types
-- default admin user
+Seeded users:
 
-Default admin login:
+- admin@cyberguard.local / Admin123!
+- analyst@cyberguard.local / Analyst123!
+- employee@cyberguard.local / Employee123!
+
+## 2) Run the frontend
+
+```bash
+cd frontend
+npm install
+```
+
+Create the frontend env file:
+
+#### macOS / Linux
+```bash
+cp .env.example .env
+```
+
+#### Windows PowerShell
+```powershell
+copy .env.example .env
+```
+
+Start Vite:
+
+```bash
+npm run dev
+```
+
+Open the address shown by Vite, usually:
 
 ```text
-email: admin@cyberguard.local
-password: Admin123!
+http://localhost:5173
 ```
 
-## Test API
+## 3) Where the API bridge lives
 
-### Health check
-```bash
-curl http://localhost:5000/api/health
+### Frontend bridge: `frontend/src/lib/api.ts`
+
+This file centralizes every HTTP request.
+
+Important lines:
+
+```ts
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 ```
 
-### Login
-```bash
-curl -X POST http://localhost:5000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"admin@cyberguard.local","password":"Admin123!"}'
+This lets the Figma frontend point to Flask backend.
+
+```ts
+const token = storage.getToken();
+headers.set('Authorization', `Bearer ${token}`);
 ```
 
-Copy the returned token.
+This is the authentication bridge. After login, every protected request carries the JWT token.
 
-### Create an incident
-```bash
-curl -X POST http://localhost:5000/api/incidents \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
-  -d '{
-    "title":"Suspicious phishing email",
-    "description":"Employee received a fake Microsoft password reset email.",
-    "severity":"High"
-  }'
+```ts
+fetch(`${API_BASE_URL}${path}`, ...)
 ```
 
-### List incidents
-```bash
-curl http://localhost:5000/api/incidents \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+This is the actual handoff from the frontend to Flask.
+
+### Backend bridge: Flask routes
+
+- `auth.py` handles login and registration.
+- `incidents.py` accepts incident JSON from the frontend.
+- `dashboard.py` returns chart-ready analytics.
+- `lookups.py` returns dropdown data like attack types and systems.
+
+Example:
+
+```py
+@bp.post('')
+@jwt_required()
+def create_incident():
 ```
 
-## Run frontend starter
+This protects the route and ensures only logged-in users can submit incidents.
 
-Open a second terminal.
-
-From the `frontend` folder, run a simple static server.
-
-### Python 3
-```bash
-python -m http.server 5500
+```py
+incident = Incident(...)
+db.session.add(incident)
+db.session.commit()
 ```
 
-Then open:
+This is the backend-to-database bridge.
+
+## 4) Figma screens
+
+### Login screen
+Original Figma exports usually use mock credential arrays. This version now does:
+
+```ts
+const user = await login(email, password);
+```
+
+That calls:
 
 ```text
-http://localhost:5500
+POST /api/auth/login
 ```
 
-The frontend calls the backend at:
+If successful:
+- token goes to localStorage
+- user object goes to context
+- page navigates by role
 
-```javascript
-const API_BASE_URL = 'http://localhost:5000/api';
+### Incident reporting form
+In Figma, the form is visual only. In this project the submit button now calls:
+
+```ts
+await api.createIncident({ ... })
 ```
 
-If your backend is hosted elsewhere, update `frontend/app.js`.
+That becomes:
 
-## How frontend connects to the API
-
-The flow is:
-
-1. User logs in from the browser.
-2. `POST /api/auth/login` returns a JWT token.
-3. Frontend stores that token in `localStorage`.
-4. Frontend sends the token in the `Authorization` header.
-5. Backend validates the token and returns JSON.
-
-Example fetch call:
-
-```javascript
-const token = localStorage.getItem('token');
-
-fetch('http://localhost:5000/api/incidents', {
-  headers: {
-    'Authorization': `Bearer ${token}`
-  }
-});
+```text
+POST /api/incidents
 ```
 
-## Main API endpoints
+### Dashboard page
+Instead of mock chart data, the dashboard now loads:
 
-### Auth
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-
-### Lookups
-- `GET /api/roles`
-- `GET /api/departments`
-- `GET /api/attack-types`
-- `GET /api/systems`
-- `POST /api/systems`
-
-### Incidents
-- `GET /api/incidents`
-- `POST /api/incidents`
-- `GET /api/incidents/<id>`
-- `PUT /api/incidents/<id>`
-- `PATCH /api/incidents/<id>/assign`
-
-### Admin
-- `GET /api/users`
-- `GET /api/audit-logs`
-
-### Dashboard
 - `GET /api/dashboard/summary`
-- `GET /api/dashboard/high-risk-departments`
+- `GET /api/incidents`
 
-### Utility
-- `POST /api/setup`
-- `GET /api/health`
+## 5) What to edit when Figma design changes
 
-## Connection issues
+When you change the design in Figma:
 
-### MySQL connection refused
-- Make sure MySQL is running.
-- Make sure the username, password, and database name in `.env` are correct.
+- edit page layout in `frontend/src/pages/*`
+- edit reusable visual blocks in `frontend/src/components/*`
+- keep API calls in `frontend/src/lib/api.ts`
+- keep backend routes stable in `backend/src/app/routes/*`
 
-### 401 Unauthorized
-- Log in again and use a fresh token.
-- Check that your request includes:
+That separation lets you redesign the UI without breaking backend connectivity.
 
-```text
-Authorization: Bearer YOUR_TOKEN
-```
+## 6) Next upgrades
 
-### CORS issues
-- The backend already enables CORS for `/api/*`.
-- Make sure the frontend is calling the correct backend URL.
-
-## Next steps
-
-- Add file uploads for incident evidence
-- Add pagination and search filters
-- Add password reset
-- Add Docker setup
-- Replace the static frontend with React
-- Add charts to the dashboard
+- add file uploads for evidence
+- add pagination and search to incidents
+- add edit/update incident modal for analysts
+- add Docker Compose for backend + MySQL + frontend
+- replace direct SQLAlchemy table creation with Alembic migrations
