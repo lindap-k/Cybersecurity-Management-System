@@ -1,19 +1,12 @@
-# CyberGuard CIMS — simplified local version
+# Cybersecurity Management System
 
-This version is trimmed for the simplest local run:
-- SQLite only
-- no MySQL setup
-- no auto-start shell hacks
-- no bundled virtual environment
-- only the frontend packages used by the current screens
-
-## What the app does
+## Execution
 - login with seeded demo users
 - report incidents
 - view dashboard charts and recent incidents
 
 ## Backend
-From the project root:
+From project root:
 
 ```bash
 cd backend
@@ -53,16 +46,7 @@ Open the Vite URL, usually:
 http://localhost:5173
 ```
 
-## Optional shortcuts
-You can also use:
-
-```bash
-./backend/start.sh
-./frontend/start.sh
-```
-
-## Removed on purpose
+## MySQL vs MySQLite
 - MySQL dependency and setup steps
 - shell `cd()` auto-start logic
 - bundled `venv`, logs, cache files, and macOS metadata
-- unused frontend packages from the original export
