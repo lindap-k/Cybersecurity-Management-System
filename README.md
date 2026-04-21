@@ -42,16 +42,16 @@ Database: Stores users, incidents, roles, departments, and metadata
 
 ## Database Design (Conceptual)
 ### Core Entities:
-Users
-Roles
-Departments
-Incidents
-Attack Types
-Systems
+- Users
+- Roles
+- Departments
+- Incidents
+- Attack Types
+- Systems
 ### Relationships:
-Users belong to Departments and Roles
-Incidents are reported by Users
-Incidents reference Attack Types and Systems
+- Users belong to Departments and Roles
+- Incidents are reported by Users
+- Incidents reference Attack Types and Systems
 
 ## Backend
 
@@ -97,31 +97,31 @@ http://localhost:5173
 
 ## Demo Workflow
 ### 1. Employee
-Log in
-Submit 2–3 incidents
+- Log in
+- Submit 2–3 incidents
 ### 2. Analyst
-Review incidents
-Update status (In Progress / Resolved)
+- Review incidents
+- Update status (In Progress / Resolved)
 ### 3. Admin
-View dashboard
-Show aggregated results
+- View dashboard
+- Show aggregated results
 
 ## Features Implemented
-User authentication and role-based access
-Incident reporting and tracking
-Status updates and lifecycle management
-Relational database with constraints
-Aggregation queries for dashboard insights
-RESTful API integration
-Full-stack interaction (Frontend ↔ Backend ↔ Database)
+- User authentication and role-based access
+- Incident reporting and tracking
+- Status updates and lifecycle management
+- Relational database with constraints
+- Aggregation queries for dashboard insights
+- RESTful API integration
+- Full-stack interaction (Frontend ↔ Backend ↔ Database)
 
 ## Advanced DB Concepts Used
-Primary & foreign keys
-Joins between tables
-Aggregations (COUNT, GROUP BY)
-Updates and deletes
-Data normalization
-Referential integrity
+- Primary & foreign keys
+- Joins between tables
+- Aggregations (COUNT, GROUP BY)
+- Updates and deletes
+- Data normalization
+- Referential integrity
 
 ## MySQL vs MySQLite
 - MySQL dependency and setup steps
