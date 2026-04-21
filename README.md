@@ -5,27 +5,27 @@ The Cybersecurity Incident Management System (CIMS) is a full-stack application 
 
 This project demonstrates core concepts from Database Management Systems, including:
 
-relational schema design
-entity relationships and constraints
-CRUD operations
-joins and aggregations
-role-based access control
-full-stack system integration
+- relational schema design
+- entity relationships and constraints
+- CRUD operations
+- joins and aggregations
+- role-based access control
+- full-stack system integration
 
 ## Problem Statement
 
 Organizations face increasing cybersecurity threats but often lack structured systems to:
 
-track incidents
-assign responsibilities
-analyze trends
-ensure timely resolution
+- track incidents
+- assign responsibilities
+- analyze trends
+- ensure timely resolution
 
 This project addresses that gap by providing a centralized platform where:
 
-employees report incidents
-analysts investigate and update status
-administrators monitor system-wide activity
+- employees report incidents
+- analysts investigate and update status
+- administrators monitor system-wide activity
 
 ## System Architecture
 
@@ -36,9 +36,9 @@ Backend API (Flask)
 SQLite Database
 
 Components:
-Frontend: User interface for reporting and managing incidents
-Backend API: Handles business logic and database interactions
-Database: Stores users, incidents, roles, departments, and metadata
+- Frontend: User interface for reporting and managing incidents
+- Backend API: Handles business logic and database interactions
+- Database: Stores users, incidents, roles, departments, and metadata
 
 ## Database Design (Conceptual)
 ### Core Entities:
