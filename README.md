@@ -106,6 +106,23 @@ Update status (In Progress / Resolved)
 View dashboard
 Show aggregated results
 
+## Features Implemented
+User authentication and role-based access
+Incident reporting and tracking
+Status updates and lifecycle management
+Relational database with constraints
+Aggregation queries for dashboard insights
+RESTful API integration
+Full-stack interaction (Frontend ↔ Backend ↔ Database)
+
+## Advanced DB Concepts Used
+Primary & foreign keys
+Joins between tables
+Aggregations (COUNT, GROUP BY)
+Updates and deletes
+Data normalization
+Referential integrity
+
 ## MySQL vs MySQLite
 - MySQL dependency and setup steps
 - shell `cd()` auto-start logic
