@@ -29,11 +29,7 @@ This project addresses that gap by providing a centralized platform where:
 
 ## System Architecture
 
-Frontend (React / Vite)
-        ↓
-Backend API (Flask)
-        ↓
-SQLite Database
+Frontend (React / Vite) -> Backend API (Flask) -> SQLite Database
 
 Components:
 - Frontend: User interface for reporting and managing incidents
