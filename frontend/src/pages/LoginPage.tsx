@@ -51,15 +51,15 @@ export function LoginPage() {
             <Shield className="h-12 w-12 text-blue-600" />
             <h1 className="text-4xl font-bold text-slate-900">CyberGuard</h1>
           </div>
-          <p className="text-slate-600">Figma-designed UI connected to a real Flask API</p>
+          <p className="text-slate-600">Incident Management System</p>
         </div>
 
         {!selectedRole ? (
           <div>
             <Card className="mb-6">
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl">Choose your role</CardTitle>
-                <CardDescription>Role selection stays in the UI, but the backend remains the source of truth after login.</CardDescription>
+                <CardTitle className="text-2xl">Welcome</CardTitle>
+                <CardDescription>Please select your role to continue</CardDescription>
               </CardHeader>
             </Card>
             <div className="grid gap-6 md:grid-cols-3">
@@ -83,7 +83,7 @@ export function LoginPage() {
             <Card>
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl">Login</CardTitle>
-                <CardDescription>This Figma screen now calls <code>/api/auth/login</code> instead of mock data.</CardDescription>
+                <CardDescription>Sign in to manage reports, investigations, and response activity.</CardDescription>
               </CardHeader>
               <CardContent>
                 <form className="space-y-4" onSubmit={handleLogin}>
@@ -110,7 +110,7 @@ export function LoginPage() {
             </Card>
             <Card className="mt-4 border-blue-200 bg-blue-50">
               <CardContent className="pt-4 text-xs text-slate-700">
-                <p className="font-semibold">Seeded users after POST /api/setup</p>
+                <p className="font-semibold">Demo accounts</p>
                 <p>Admin: admin@cyberguard.local / Admin123!</p>
                 <p>Analyst: analyst@cyberguard.local / Analyst123!</p>
                 <p>Employee: employee@cyberguard.local / Employee123!</p>

@@ -52,7 +52,9 @@ class User(db.Model):
             'user_id': self.user_id,
             'name': self.name,
             'email': self.email,
+            'role_id': self.role_id,
             'role': self.role.name if self.role else None,
+            'department_id': self.department_id,
             'department': self.department.name if self.department else None,
         }
 
@@ -103,6 +105,7 @@ class Incident(db.Model):
     department_id = db.Column(db.Integer, db.ForeignKey('departments.department_id'))
     reported_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     resolved_at = db.Column(db.DateTime)
+    resolution_notes = db.Column(db.Text)
 
     reporter = db.relationship('User', foreign_keys=[reported_by], backref='reported_incidents')
     analyst = db.relationship('User', foreign_keys=[assigned_to], backref='assigned_incidents')
@@ -117,11 +120,15 @@ class Incident(db.Model):
             'description': self.description,
             'severity': self.severity,
             'status': self.status,
+            'reported_by_id': self.reported_by,
             'reported_by': self.reporter.name if self.reporter else None,
+            'assigned_to_id': self.assigned_to,
             'assigned_to': self.analyst.name if self.analyst else None,
+            'department_id': self.department_id,
             'department': self.department.name if self.department else None,
             'reported_at': self.reported_at.isoformat() if self.reported_at else None,
             'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None,
+            'resolution_notes': self.resolution_notes,
             'attack_types': [item.to_dict() for item in self.attack_types],
             'systems': [item.to_dict() for item in self.systems],
         }

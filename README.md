@@ -67,7 +67,7 @@ The backend uses a local SQLite file at `backend/app.db` and seeds data automati
 Health check:
 
 ```text
-http://localhost:5000/api/health
+http://localhost:5001/api/health
 ```
 
 Demo users:

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from sqlalchemy import inspect, text
 from ..extensions import db
 from ..models import Role, Department, AttackType, User, SystemAsset
 
@@ -7,6 +8,11 @@ bp = Blueprint('setup', __name__, url_prefix='/api')
 
 def seed_database():
     db.create_all()
+    inspector = inspect(db.engine)
+    incident_columns = {column['name'] for column in inspector.get_columns('incidents')}
+    if 'resolution_notes' not in incident_columns:
+        with db.engine.begin() as connection:
+            connection.execute(text('ALTER TABLE incidents ADD COLUMN resolution_notes TEXT'))
 
     role_defaults = {
         'Employee': 'Can report incidents',

@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Shield, LayoutDashboard, FileWarning, LogOut } from 'lucide-react';
+import { Shield, LayoutDashboard, FileWarning, LogOut, Inbox, ClipboardList, Users } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 
@@ -9,6 +9,9 @@ export function Layout() {
 
   const navItems = [
     { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['administrator', 'analyst'] },
+    { to: '/tickets/unassigned', label: 'Unassigned Tickets', icon: Inbox, roles: ['administrator', 'analyst'] },
+    { to: '/tickets/my', label: 'My Tickets', icon: ClipboardList, roles: ['administrator', 'analyst'] },
+    { to: '/admin/users', label: 'Manage Employees', icon: Users, roles: ['administrator'] },
     { to: '/report', label: 'Report Incident', icon: FileWarning, roles: ['administrator', 'analyst', 'employee'] },
   ];
 
@@ -19,8 +22,8 @@ export function Layout() {
           <div className="flex items-center gap-3">
             <Shield className="h-8 w-8 text-blue-600" />
             <div>
-              <h1 className="text-xl font-bold text-slate-900">CyberGuard CIMS</h1>
-              <p className="text-sm text-slate-500">Figma UI + Flask API bridge</p>
+              <h1 className="text-xl font-bold text-slate-900">CyberGuard</h1>
+              <p className="text-sm text-slate-500">Incident Management System</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -36,7 +39,7 @@ export function Layout() {
         </div>
       </header>
       <div className="mx-auto grid max-w-7xl grid-cols-12 gap-6 px-6 py-6">
-        <aside className="col-span-12 rounded-2xl bg-white p-4 shadow-sm lg:col-span-3">
+        <aside className="col-span-12 rounded-lg bg-white p-4 shadow-sm lg:col-span-3">
           <nav className="space-y-2">
             {navItems
               .filter((item) => !user?.role || item.roles.includes(user.role.toLowerCase()))
@@ -47,7 +50,7 @@ export function Layout() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium ${active ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'}`}
+                    className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium ${active ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'}`}
                   >
                     <Icon className="h-4 w-4" />
                     {item.label}

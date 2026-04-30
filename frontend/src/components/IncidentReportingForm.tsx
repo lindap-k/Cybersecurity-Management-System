@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { api } from '@/lib/api';
 import type { AttackType, SystemAsset } from '@/types';
@@ -68,11 +67,11 @@ export function IncidentReportingForm() {
   };
 
   return (
-    <Card className="w-full rounded-2xl shadow-sm">
+    <Card className="w-full rounded-lg shadow-sm">
       <CardHeader>
         <CardTitle>Report Security Incident</CardTitle>
         <CardDescription>
-          This form is the bridge from your Figma screen to the backend. Each field maps to the JSON payload sent to <code>/api/incidents</code>.
+          Share the key details so the security team can review and respond quickly.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -125,15 +124,6 @@ export function IncidentReportingForm() {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-              <div className="flex items-start gap-2">
-                <AlertCircle className="mt-0.5 h-4 w-4" />
-                <p>
-                  In Figma this is only visual state. In code, the submit button serializes the form into JSON, adds the bearer token, and posts it to the Flask API.
-                </p>
               </div>
             </div>
 
