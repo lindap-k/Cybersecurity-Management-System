@@ -27,7 +27,7 @@ This project addresses that gap by providing a centralized platform where:
 - analysts investigate and update status
 - administrators monitor system-wide activity
 
-## System Architecture
+## System Architecture 
 
 Frontend (React / Vite) -> Backend API (Flask) -> SQLite Database
 
